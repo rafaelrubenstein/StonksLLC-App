@@ -3,6 +3,9 @@ import pandas as pd
 import pickle
 import plotly.express as px
 
+with open("/styles.css") as f:
+    st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
+
 
 
 knclass = pickle.load(open("models/kneighborclass.pkl", 'rb'))
