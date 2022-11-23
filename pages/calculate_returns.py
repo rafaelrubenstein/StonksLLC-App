@@ -3,6 +3,13 @@ import pandas as pd
 import pickle
 import plotly.express as px
 
+st.set_page_config(
+    page_title="Predict Undervalued",
+    page_icon="💸",
+    initial_sidebar_state="collapsed",
+    layout = "centered",
+)
+
 with open("styles.css") as f:
     st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
     
