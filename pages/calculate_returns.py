@@ -50,7 +50,7 @@ st.write("These numbers can be found on the company's balance sheet, if a compan
 
 act = st.number_input("Enter the companys Total Current Assets",key=1)
 
-at = st.number_input("Enter the companys Total Current Assets",key=2)
+at = st.number_input("Enter the companys Current Assets",key=2)
 
 che = st.number_input("Enter the companys Cash and short term investments",key=3)
 
