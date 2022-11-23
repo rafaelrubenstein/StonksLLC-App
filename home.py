@@ -42,7 +42,7 @@ components.html("""
     </ul>
   </div>
 </nav>
-""")
+""", height= 600)
 
 # Create a page header
 st.header("Welcome To The Future Of Investing")
