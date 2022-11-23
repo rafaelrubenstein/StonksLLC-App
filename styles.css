@@ -21,10 +21,3 @@ footer {
 header {
     visibility: hidden;
 }
-@media only screen and (max-width: 600px) {
-    .text-small{
-    font-size: 6px;
-    
-    }
-
-}
