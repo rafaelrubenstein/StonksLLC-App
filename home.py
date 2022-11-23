@@ -5,6 +5,8 @@ import pandas as pd
 st.set_page_config(
     page_title="Stonks LLC",
     page_icon="💸",
+    initial_sidebar_state="collapsed",
+    layout = "centered",
 )
 with open("styles.css") as f:
     st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
