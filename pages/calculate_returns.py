@@ -155,7 +155,7 @@ to_predict = [act,at,che,dltt,intan,lct,lt,rect,mkvalt]
 
 if make_prediction:
     scaler = StandardScaler()
-    predcit_scaled = scaler.transform(to_predict)
+    predcit_scaled = scaler.fit_transform(to_predict)
     prediction = model.predict(predict_scaled)
 
     if prediction:
