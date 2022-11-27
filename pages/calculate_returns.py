@@ -86,10 +86,7 @@ def scrape_os_and_calulate_mkvalt(ticker):
         marketvalue = closing_price * most_current_fyear_ordinary_shares
         
     except:
-        st.text("The Ticker May be Delisted. Please check if the Ticker exists and make sure to enter correctly")
-        st.write("The Ticker May be Delisted. Please check if the Ticker exists and make sure to enter correctly")
-        ticker = st.text_input("Ticker for company an example is the apple ticker","aapl",key= "try except")
-        scrape_os_and_calulate_mkvalt(ticker)
+        st.exception("The Ticker May be Delisted. Please check if the Ticker exists and make sure to enter correctly")
     else:
         return [marketvalue, msft]
 
