@@ -16,6 +16,9 @@ st.markdown('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootst
 st.markdown("""
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark" style="background-color: #16A2CB;">
   <a class="navbar-brand" href="https://stonksllc.streamlit.app" target="_blank">Stonks LLC</a>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
@@ -38,21 +41,6 @@ st.markdown("""
 </nav>
 """, unsafe_allow_html=True)
 
+st.title("Currently under Contsruction")
 
-with open("coming_soon.css") as d:
-    st.markdown('<style>{}</style>'.format(d.read()), unsafe_allow_html=True)
-
-
-st.markdown("""<div class="bgimg">
-  <div class="topleft">
-    <p>Logo</p>
-  </div>
-  <div class="middle">
-    <h1>COMING SOON</h1>
-    <hr>
-    <p>35 days</p>
-  </div>
-  <div class="bottomleft">
-    <p>Some text</p>
-  </div>
-</div> """, unsafe_allow_html=True)
+st.image("pages/pexels-pixabay-210607.jpg")
