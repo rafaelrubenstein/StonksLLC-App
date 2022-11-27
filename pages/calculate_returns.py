@@ -63,7 +63,7 @@ def scrape_os_and_calulate_mkvalt(ticker):
     response = requests.get(ticker_url,headers=headers )
     
     html = response.content
-    soup = BeautifulSoup(html,,"html.parser")
+    soup = BeautifulSoup(html,"html.parser")
     
     ordinary_shares = soup.find(title = "Ordinary Shares Number")
     date = soup.find(class_='D(tbhg)').text
