@@ -5,6 +5,7 @@ import plotly.express as px
 import yfinance as yf
 from bs4 import BeautifulSoup
 import requests
+from sklearn.preprocessing import StandarScaler
 
 st.set_page_config(
     page_title="Predict Undervalued",
@@ -153,14 +154,16 @@ make_prediction = st.button("Predict if stock is undervalued")
 to_predict = [act,at,che,dltt,intan,lct,lt,rect,mkvalt]
 
 if make_prediction:
-    prediction = model.predict([to_predict])
+    scaler = StandardScaler()
+    predcit_scaled = scaler.transform(to_predict)
+    prediction = model.predict(predict_scaled)
 
     if prediction:
         st.write("The stock is likely undervalued! You should invest in it")
     else:
         st.write("This stock is not undervalued")
 
-st.text("These are the financial numbers that were used to predict the company's value")        
-financial_data_df = pd.DataFrame.from_dict(financial_data,orient="index")
-st.dataframe(financial_data_df)        
-st.caption("Numbers Above are in millions")
+    st.text("These are the financial numbers that were used to predict the company's value")        
+    financial_data_df = pd.DataFrame.from_dict(financial_data,orient="index")
+    st.dataframe(financial_data_df)        
+    st.caption("Numbers Above are in millions")
