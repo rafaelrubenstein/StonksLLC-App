@@ -2,6 +2,9 @@ import streamlit as st
 import pandas as pd
 import pickle
 import plotly.express as px
+import yfinance as yf
+from bs4 import BeautifulSoup
+import requests
 
 st.set_page_config(
     page_title="Predict Undervalued",
@@ -43,37 +46,88 @@ st.markdown("""
 
 
 
-underVale_pred = pickle.load(open("models/predict_undervalued.pkl", 'rb'))
+model = pickle.load(open("models/predict_undervalued.pkl", 'rb'))
+
+def scrape_os_and_calulate_mkvalt(ticker):
+
+    ticker = ticker.upper()
+    try: 
+        msft = yf.Ticker(ticker)
+    except:
+        print("The Ticker May be Delisted. Please check if the Ticker exists and make sure to enter correctly")
+    scrape_url = 'https://finance.yahoo.com/quote'
+    ticker_url = "{}/{}".format(scrape_url, ticker) +'/balance-sheet?p='+ ticker
+    
+    headers={'User-Agent': 'Custom'}
+
+    response = requests.get(ticker_url,headers=headers )
+    
+    html = response.content
+    soup = BeautifulSoup(html)
+    
+    ordinary_shares = soup.find(title = "Ordinary Shares Number")
+    date = soup.find(class_='D(tbhg)').text
+    if len(date) == 49:
+        fyear_end_date = date[15:19] + "-" + date[9:11] + "-" + date[12:14]
+    else:
+        fyear_end_date = date[14:18] + "-" + date[9:10] + "-" + date[11:13]
+    
+    shares = []
+    for i in ordinary_shares.parent.next_siblings:
+        number = i.text.replace(",",'')
+        shares.append(int(number))
+    
+    most_current_fyear_ordinary_shares = shares[0] / 100 
+    
+    j = msft.history(start = fyear_end_date)
+    closing_price = j.Close.iloc[0]
+    marketvalue = closing_price * most_current_fyear_ordinary_shares
+    
+    return [marketvalue, msft]
+
+def clean_balance_sheet_for_feautures(msft, marketvalue):
+    balanceSheet = msft.balance_sheet
+    
+    balanceSheet.drop(index=['Capital Surplus','Common Stock','Inventory','Other Stockholder Equity',
+           'Property Plant Equipment','Good Will','Gains Losses Not Affecting Retained Earnings',
+                              'Total Stockholder Equity','Retained Earnings',
+                              'Long Term Investments','Net Tangible Assets','Accounts Payable',
+                              'Other Current Liab','Other Assets','Other Current Assets','Other Liab'],inplace = True)
+    first_col = balanceSheet.columns[0]
+    current_numbers_needed = balanceSheet[first_col]
+    current_numbers_needed = current_numbers_needed.to_dict()
+#     convert numbers to be in millions 
+    for key in current_numbers_needed:
+        current_numbers_needed[key] = current_numbers_needed[key] / 100000
+    current_numbers_needed["Market Value"] = marketvalue
+    return current_numbers_needed
 
 
-st.write("Enter the following items found on a companies balance sheet. Units are in millions.")
+st.write("Please enter the Ticker of the company you would like to predict its value")
 
-act = st.number_input("Total Current Assets",key=1)
+ticker = st.text_input("Ticker for company an example is the apple ticker","aapl")
 
-at = st.number_input("Current Assets",key=2)
+market_value, msft = scrape_os_and_calulate_mkvalt(ticker)
 
-che = st.number_input("Cash and short term investments",key=3)
+financial_data = clean_balance_sheet_for_feautures(msft,market_value)
 
-dltt = st.number_input("Total Longterm Debt",key=4)
+act = financial_data['Total Current Assets']
+at = financial_data['Total Assets']
+che = financial_data['Cash']
+dltt = financial_data['Long Term Debt']
+intan = financial_data['Intangible Assets']
+lct = financial_data['Total Current Liabilities']
+lt = financial_data['Total Liab']
+rect = financial_data['Net Receivables']
+mkvalt = financial_data['Market Value']
 
-intan = st.number_input("Total Intangible assets",key=5)
-
-lct = st.number_input("Total Current Liabilities",key=6)
-
-lt = st.number_input("Total Liabilities",key=7)
-
-rect = st.number_input("Total Recievables",key=8)
-
-st.write("Income Statement Items")
-
-mkvalt = st.number_input("Current Market value",key=9)
 
 make_prediction = st.button("Predict if stock is undervalued")
 
 to_predict = [act,at,che,dltt,intan,lct,lt,rect,mkvalt]
 
 if make_prediction:
-    prediction = knclass.predict([to_predict])
+    prediction = model.predict([to_predict])
 
     if prediction:
         st.write("The stock is likely undervalued! You should invest in it")
