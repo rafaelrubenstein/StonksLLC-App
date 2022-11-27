@@ -5,7 +5,7 @@ import plotly.express as px
 import yfinance as yf
 from bs4 import BeautifulSoup
 import requests
-from sklearn.preprocessing import StandarScaler
+from sklearn.preprocessing import StandardScaler
 
 st.set_page_config(
     page_title="Predict Undervalued",
