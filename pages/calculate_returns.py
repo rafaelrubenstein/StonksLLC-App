@@ -88,7 +88,7 @@ def scrape_os_and_calulate_mkvalt(ticker):
     except:
         st.text("The Ticker May be Delisted. Please check if the Ticker exists and make sure to enter correctly")
         st.write("The Ticker May be Delisted. Please check if the Ticker exists and make sure to enter correctly")
-        ticker = st.text_input("Ticker for company an example is the apple ticker","aapl")
+        ticker = st.text_input("Ticker for company an example is the apple ticker","aapl",key= "try except")
         scrape_os_and_calulate_mkvalt(ticker)
     else:
         return [marketvalue, msft]
@@ -136,7 +136,7 @@ def clean_balance_sheet_for_feautures(msft, marketvalue):
 
 st.write("Please enter the Ticker of the company you would like to predict its value")
 
-ticker = st.text_input("Ticker for company an example is the apple ticker","aapl")
+ticker = st.text_input("Ticker for company an example is the apple ticker","aapl",key= "first input")
 
 market_value, msft = scrape_os_and_calulate_mkvalt(ticker)
 
