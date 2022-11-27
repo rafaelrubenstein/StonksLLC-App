@@ -156,12 +156,13 @@ make_prediction = st.button("Predict if stock is undervalued")
 to_predict = [act,at,che,dltt,intan,lct,lt,rect,mkvalt]
 
 if make_prediction:
-#     scaler = StandardScaler()
-#     predcit_scaled = scaler.fit_transform(to_predict)
-    prediction = model.predict([to_predict])
+    
+    sc = pickle.load(open('models/scaler.pkl','rb'))
+    to_predict_scaled = sc.transform(to_predict)
+    prediction = model.predict([to_predict_scaled])
 
     if prediction:
-        st.write("The stock is likely undervalued! You should invest in it")
+        st.write("The stock is likely undervalued! You should invest in it!")
     else:
         st.write("This stock is not undervalued")
 
