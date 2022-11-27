@@ -85,9 +85,8 @@ def scrape_os_and_calulate_mkvalt(ticker):
     
     return [marketvalue, msft]
 
-def clean_balance_sheet_for_feautures(msft, marketvalue):
-    balanceSheet = msft.balance_sheet
-    
+
+    balanceSheet = msft.balance_sheet  
     balanceSheet.drop(index=['Capital Surplus','Common Stock','Inventory','Other Stockholder Equity',
            'Property Plant Equipment','Good Will','Gains Losses Not Affecting Retained Earnings',
                               'Total Stockholder Equity','Retained Earnings',
@@ -102,6 +101,30 @@ def clean_balance_sheet_for_feautures(msft, marketvalue):
     current_numbers_needed["Market Value"] = marketvalue
     return current_numbers_needed
 
+def clean_balance_sheet_for_feautures(msft, marketvalue):
+    balanceSheet = msft.balance_sheet
+    
+    dict_index_needed = {'Intangible Assets':1 ,'Total Liab': 2,'Total Assets':3,'Cash':4,'Total Current Liabilities':5,
+           'Total Current Assets':6,'Net Receivables':7,'Long Term Debt':8}
+     
+    index = balanceSheet.index.to_list()
+    
+    for i in range(len(index) - 1, -1, -1):
+        if index[i] in dict_index_needed:
+            index.pop(i)
+        
+    balanceSheet.drop(index = index, inplace = True)
+    
+    first_col = balanceSheet.columns[0]
+    
+    current_numbers_needed = balanceSheet[first_col]
+    current_numbers_needed = current_numbers_needed.to_dict()
+    
+#     convert numbers to be in millions 
+    for key in current_numbers_needed:
+        current_numbers_needed[key] = current_numbers_needed[key] / 100000
+    current_numbers_needed["Market Value"] = marketvalue
+    return current_numbers_needed
 
 st.write("Please enter the Ticker of the company you would like to predict its value")
 
@@ -111,15 +134,15 @@ market_value, msft = scrape_os_and_calulate_mkvalt(ticker)
 
 financial_data = clean_balance_sheet_for_feautures(msft,market_value)
 
-act = financial_data['Total Current Assets']
-at = financial_data['Total Assets']
-che = financial_data['Cash']
-dltt = financial_data['Long Term Debt']
-intan = financial_data['Intangible Assets']
-lct = financial_data['Total Current Liabilities']
-lt = financial_data['Total Liab']
-rect = financial_data['Net Receivables']
-mkvalt = financial_data['Market Value']
+act = financial_data.get('Total Current Assets',0)
+at = financial_data.get('Total Assets',0)
+che = financial_data.get('Cash',0)
+dltt = financial_data.get('Long Term Debt',0)
+intan = financial_data.get('Intangible Assets',0)
+lct = financial_data.get('Total Current Liabilities',0)
+lt = financial_data('Total Liab',0)
+rect = financial_data.get('Net Receivables',0)
+mkvalt = financial_data.get('Market Value',0)
 
 
 make_prediction = st.button("Predict if stock is undervalued")
