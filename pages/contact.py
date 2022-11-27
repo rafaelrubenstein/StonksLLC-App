@@ -39,8 +39,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-with open("coming_soon.css") as f:
-    st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
+with open("coming_soon.css") as d:
+    st.markdown('<style>{}</style>'.format(d.read()), unsafe_allow_html=True)
 
 
 st.markdown("""<div class="bgimg">
