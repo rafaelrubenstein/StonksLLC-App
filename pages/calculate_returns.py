@@ -55,39 +55,43 @@ model = pickle.load(open("models/predict_undervalued.pkl", 'rb'))
 def scrape_os_and_calulate_mkvalt(ticker):
 
     ticker = ticker.upper()
+    msft = yf.Ticker(ticker)
     try: 
-        msft = yf.Ticker(ticker)
-    except:
-        print("The Ticker May be Delisted. Please check if the Ticker exists and make sure to enter correctly")
-    scrape_url = 'https://finance.yahoo.com/quote'
-    ticker_url = "{}/{}".format(scrape_url, ticker) +'/balance-sheet?p='+ ticker
-    
-    headers={'User-Agent': 'Custom'}
+        scrape_url = 'https://finance.yahoo.com/quote'
+        ticker_url = "{}/{}".format(scrape_url, ticker) +'/balance-sheet?p='+ ticker
+        
+        headers={'User-Agent': 'Custom'}
 
-    response = requests.get(ticker_url,headers=headers )
-    
-    html = response.content
-    soup = BeautifulSoup(html,"html.parser")
-    
-    ordinary_shares = soup.find(title = "Ordinary Shares Number")
-    date = soup.find(class_='D(tbhg)').text
-    if len(date) == 49:
-        fyear_end_date = date[15:19] + "-" + date[9:11] + "-" + date[12:14]
+        response = requests.get(ticker_url,headers=headers )
+      
+        html = response.content
+        soup = BeautifulSoup(html,"html.parser")
+      
+        ordinary_shares = soup.find(title = "Ordinary Shares Number")
+        date = soup.find(class_='D(tbhg)').text
+        if len(date) == 49:
+            fyear_end_date = date[15:19] + "-" + date[9:11] + "-" + date[12:14]
+        else:
+            fyear_end_date = date[14:18] + "-" + date[9:10] + "-" + date[11:13]
+      
+        shares = []
+        for i in ordinary_shares.parent.next_siblings:
+            number = i.text.replace(",",'')
+            shares.append(int(number))
+      
+        most_current_fyear_ordinary_shares = shares[0] / 100 
+      
+        j = msft.history(start = fyear_end_date)
+        closing_price = j.Close.iloc[0]
+        marketvalue = closing_price * most_current_fyear_ordinary_shares
+        
+    except:
+        st.text("The Ticker May be Delisted. Please check if the Ticker exists and make sure to enter correctly")
+        st.write("The Ticker May be Delisted. Please check if the Ticker exists and make sure to enter correctly")
+        ticker = st.text_input("Ticker for company an example is the apple ticker","aapl")
+        scrape_os_and_calulate_mkvalt(ticker)
     else:
-        fyear_end_date = date[14:18] + "-" + date[9:10] + "-" + date[11:13]
-    
-    shares = []
-    for i in ordinary_shares.parent.next_siblings:
-        number = i.text.replace(",",'')
-        shares.append(int(number))
-    
-    most_current_fyear_ordinary_shares = shares[0] / 100 
-    
-    j = msft.history(start = fyear_end_date)
-    closing_price = j.Close.iloc[0]
-    marketvalue = closing_price * most_current_fyear_ordinary_shares
-    
-    return [marketvalue, msft]
+        return [marketvalue, msft]
 
 
     balanceSheet = msft.balance_sheet  
