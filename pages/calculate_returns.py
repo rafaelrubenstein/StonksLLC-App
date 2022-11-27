@@ -160,5 +160,7 @@ if make_prediction:
     else:
         st.write("This stock is not undervalued")
 
-financial_data_df = pd.DataFrame([financial_data])
+st.text("These are the financial numbers that were used to predict the company's value")        
+financial_data_df = pd.DataFrame.from_dict(need_dict,orient="index")
 st.dataframe(financial_data_df)        
+st.caption("Numbers Above are in millions")
