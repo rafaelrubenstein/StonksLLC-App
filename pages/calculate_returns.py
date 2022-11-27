@@ -161,4 +161,4 @@ if make_prediction:
         st.write("This stock is not undervalued")
 
 financial_data_df = pd.DataFrame([financial_data])
-st.dataframe(financial_data_df,200,100)        
+st.dataframe(financial_data_df)        
