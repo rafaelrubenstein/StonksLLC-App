@@ -140,7 +140,7 @@ che = financial_data.get('Cash',0)
 dltt = financial_data.get('Long Term Debt',0)
 intan = financial_data.get('Intangible Assets',0)
 lct = financial_data.get('Total Current Liabilities',0)
-lt = financial_data('Total Liab',0)
+lt = financial_data.get('Total Liab',0)
 rect = financial_data.get('Net Receivables',0)
 mkvalt = financial_data.get('Market Value',0)
 
