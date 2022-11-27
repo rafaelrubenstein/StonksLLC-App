@@ -43,7 +43,7 @@ st.markdown("""
 
 
 
-knclass = pickle.load(open("models/kneighborclass.pkl", 'rb'))
+underVale_pred = pickle.load(open("models/predict_undervalued.pkl", 'rb'))
 
 
 st.write("Enter the following items found on a companies balance sheet. Units are in millions.")
@@ -65,13 +65,12 @@ lt = st.number_input("Total Liabilities",key=7)
 rect = st.number_input("Total Recievables",key=8)
 
 st.write("Income Statement Items")
-spi = st.number_input("Special items",key=9)
 
-mkvalt = st.number_input("Current Market value",key=10)
+mkvalt = st.number_input("Current Market value",key=9)
 
 make_prediction = st.button("Predict if stock is undervalued")
 
-to_predict = [act,at,che,dltt,intan,lct,lt,rect,spi,mkvalt]
+to_predict = [act,at,che,dltt,intan,lct,lt,rect,mkvalt]
 
 if make_prediction:
     prediction = knclass.predict([to_predict])
