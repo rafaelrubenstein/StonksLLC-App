@@ -147,7 +147,7 @@ if make_prediction:
     financial_data_df_to_predict = pd.DataFrame([financial_data])
     financial_data_df_to_predict = financial_data_df_to_predict.sort_index(axis= 1)
     to_predict_scaled = scaler.transform(financial_data_df_to_predict)
-    prediction = model.predict([to_predict_scaled])
+    prediction = model.predict(to_predict_scaled)
 
     if prediction:
         st.write("The stock is likely undervalued! You should invest in it!")
