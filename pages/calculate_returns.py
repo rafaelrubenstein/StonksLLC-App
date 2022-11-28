@@ -50,7 +50,7 @@ st.markdown("""
 
 
 
-model = pickle.load(open("models/predict_undervalued.pkl", 'rb'))
+model = pickle.load(open("models/model.pkl", 'rb'))
 scaler = pickle.load(open("models/scaler.pkl", 'rb'))
 
 def scrape_os_and_calulate_mkvalt(ticker):
