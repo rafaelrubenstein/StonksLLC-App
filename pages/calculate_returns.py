@@ -123,7 +123,7 @@ def clean_balance_sheet_for_feautures(msft, marketvalue):
 
 st.write("Please enter the Ticker of the company you would like to predict its value")
 
-ticker = st.text_input("Ticker for company an example is the apple ticker","aapl",key= "first input")
+ticker = st.text_input("Ticker for company an example is the apple ticker","aapl")
 
 market_value, msft = scrape_os_and_calulate_mkvalt(ticker)
 
