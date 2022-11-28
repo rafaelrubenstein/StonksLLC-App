@@ -51,6 +51,7 @@ st.markdown("""
 
 
 model = pickle.load(open("models/predict_undervalued.pkl", 'rb'))
+scaler = pickle.load(open("models/scaler.pkl", 'rb'))
 
 def scrape_os_and_calulate_mkvalt(ticker):
 
@@ -92,21 +93,6 @@ def scrape_os_and_calulate_mkvalt(ticker):
         return [marketvalue, msft]
 
 
-    balanceSheet = msft.balance_sheet  
-    balanceSheet.drop(index=['Capital Surplus','Common Stock','Inventory','Other Stockholder Equity',
-           'Property Plant Equipment','Good Will','Gains Losses Not Affecting Retained Earnings',
-                              'Total Stockholder Equity','Retained Earnings',
-                              'Long Term Investments','Net Tangible Assets','Accounts Payable',
-                              'Other Current Liab','Other Assets','Other Current Assets','Other Liab'],inplace = True)
-    first_col = balanceSheet.columns[0]
-    current_numbers_needed = balanceSheet[first_col]
-    current_numbers_needed = current_numbers_needed.to_dict()
-#     convert numbers to be in millions 
-    for key in current_numbers_needed:
-        current_numbers_needed[key] = current_numbers_needed[key] / 100000
-    current_numbers_needed["Market Value"] = marketvalue
-    return current_numbers_needed
-
 def clean_balance_sheet_for_feautures(msft, marketvalue):
     balanceSheet = msft.balance_sheet
     
@@ -125,11 +111,14 @@ def clean_balance_sheet_for_feautures(msft, marketvalue):
     
     current_numbers_needed = balanceSheet[first_col]
     current_numbers_needed = current_numbers_needed.to_dict()
-    
 #     convert numbers to be in millions 
     for key in current_numbers_needed:
-        current_numbers_needed[key] = current_numbers_needed[key] / 100000
+        current_numbers_needed[key] = current_numbers_needed[key] / 100000    
     current_numbers_needed["Market Value"] = marketvalue
+# check to see that dict has every value and key needed for features 
+    for key in dict_index_needed.keys():
+        if key not in current_numbers_needed:
+            current_numbers_needed[key] = 0
     return current_numbers_needed
 
 st.write("Please enter the Ticker of the company you would like to predict its value")
@@ -140,25 +129,24 @@ market_value, msft = scrape_os_and_calulate_mkvalt(ticker)
 
 financial_data = clean_balance_sheet_for_feautures(msft,market_value)
 
-act = financial_data.get('Total Current Assets',0)
-at = financial_data.get('Total Assets',0)
-che = financial_data.get('Cash',0)
-dltt = financial_data.get('Long Term Debt',0)
-intan = financial_data.get('Intangible Assets',0)
-lct = financial_data.get('Total Current Liabilities',0)
-lt = financial_data.get('Total Liab',0)
-rect = financial_data.get('Net Receivables',0)
-mkvalt = financial_data.get('Market Value',0)
+
+# act = financial_data.get('Total Current Assets'0)
+# at = financial_data.get('Total Assets',0)
+# che = financial_data.get('Cash',0)
+# dltt = financial_data.get('Long Term Debt',0)
+# intan = financial_data.get('Intangible Assets',0)
+# lct = financial_data.get('Total Current Liabilities',0)
+# lt = financial_data.get('Total Liab',0)
+# rect = financial_data.get('Net Receivables',0)
+# mkvalt = financial_data.get('Market Value',0)
 
 
 make_prediction = st.button("Predict if stock is undervalued")
 
-to_predict = [act,at,che,dltt,intan,lct,lt,rect,mkvalt]
-
 if make_prediction:
-    
-    sc = pickle.load(open('models/scaler.pkl','rb'))
-    to_predict_scaled = sc.transform(to_predict)
+    financial_data_df_to_predict = pd.DataFrame([financial_data])
+    financial_data_df_to_predict = financial_data_df.sort_index(axis= 1)
+    to_predict_scaled = scaler.transform(financial_data_df_to_predict)
     prediction = model.predict([to_predict_scaled])
 
     if prediction:
