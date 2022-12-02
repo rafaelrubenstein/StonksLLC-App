@@ -18,8 +18,6 @@ https://stonksllc.streamlit.app/
 ## Data Sources
 - Wharton Research Data Service - https://wrds-www.wharton.upenn.edu/
 
-- yFinance api - https://pypi.org/project/yfinance/
-
 ## About the Process
 
 Extensive research, data cleaning, data visualizations, and model building and evaluation went into the process of choosing the best model to use on the web application. This was all done in jupyter notebooks, the best model was then dumped into a file to be used by the webapp. 
