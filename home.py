@@ -28,16 +28,16 @@ st.markdown("""
         <a class="nav-link disabled" href="https://stonksllc.streamlit.app" target= "_self">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/calculate_returns" >Predict Company's Value</a>
+        <a class="nav-link" href="https://stonksllc.streamlit.app/calculate_returns" target="_self" >Predict Company's Value</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/visualize_data" target= "_self">Visualize Stock Data</a>
+        <a class="nav-link" href="https://stonksllc.streamlit.app/visualize_data" target= "_self">Visualize Stock Data</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/about_us" target= "_self"> About Us</a>
+        <a class="nav-link" href="https://stonksllc.streamlit.app/about_us" target= "_self"> About Us</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="contact" target= "_self">Contact us</a>
+        <a class="nav-link" href="https://stonksllc.streamlit.app/contact" target= "_self">Contact us</a>
       </li>
     </ul>
   </div>
