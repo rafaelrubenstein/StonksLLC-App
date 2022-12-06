@@ -31,7 +31,7 @@ st.markdown("""
         <a class="nav-link" href="/calculate_returns">Predict Company's Value</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/visualize_data">Visualize Stock Data</a>
+        <a class="nav-link" href="/visualize_data" target= "_self">Visualize Stock Data</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/about_us"> About Us</a>
