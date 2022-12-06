@@ -41,7 +41,24 @@ st.markdown("""
 </nav>
 """, unsafe_allow_html=True)
 
+col1,col2,col3 = st.columns(3)
 
-st.title("Currently under Contsruction")
+with col1:
+  st.title("Rafael Rubenstein")
+  st.image("pages/rafael.jpg")
+  st.write("""Rafael Graduated Brooklyn College with a B.S in Computer science. 
+  He is currently pursuing his Masters In Computer Science-Concentration in Data Science from University Of
+  Illinoi Urabna-Champaign.
+  
+  He has a passion for finance and healthcare. He spends his free time working out, reading, playing video games, 
+  and watching Anime.""")
 
-st.image("pages/pexels-pixabay-210607.jpg")
+with col2:
+  st.title("Yaakov Goffstein")
+  st.image("pages/yaakov.jpeg")
+  st.write("""FILL IN INFO """)
+
+with col3:
+  st.title("Nguyen Than")
+  st.image("pages/stockprices.jpg")
+  st.write("""FILL IN INFO """)

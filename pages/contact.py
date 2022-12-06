@@ -43,4 +43,4 @@ st.markdown("""
 
 st.title("Currently under Contsruction")
 
-st.image("pages/pexels-pixabay-210607.jpg")
+st.image("pages/stockprices.jpg")
