@@ -47,9 +47,7 @@ with col1:
   st.title("Rafael Rubenstein")
   st.image("pages/rafael.jpg")
   st.write("""Rafael Graduated Brooklyn College with a B.S in Computer science. 
-  He is currently pursuing his Masters In Computer Science-Concentration in Data Science from University Of
-  Illinoi Urabna-Champaign.
-  
+  He is currently pursuing his Masters In Computer Science-Concentration in Data Science from University Of Illinois Urabna-Champaign.
   He has a passion for finance and healthcare. He spends his free time working out, reading, playing video games, 
   and watching Anime.""")
 
