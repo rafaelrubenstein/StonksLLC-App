@@ -1,4 +1,9 @@
 import streamlit as st
+import matplotlib.pyplot as plt 
+import yfinance as yf
+import pandas as pd 
+import numpy as np
+
 
 
 st.set_page_config(
@@ -42,6 +47,58 @@ st.markdown("""
 </nav>
 """, unsafe_allow_html=True)
 
-st.title("Currently under Contsruction")
+def get_index_prices(index1,index2,index3,index4,index5):
+  #  this may not be needed but would be used to set the end date
+  # date = (datetime.datetime.today()- timedelta(days = 1)).date().isoformat()
+  date_5_years_ago = (datetime.datetime.today()- timedelta(days = 1825)).date().isoformat()
+  indexfunds = index1 + " " + index2 + " " + index3 + " " + index4 + " " + index5
+  raw_data = yf.download (tickers = indexfunds,
+                              start = date_5_years_ago, #The starting date of our data set
+                              interval = "1mo",  
+                              group_by = 'ticker', 
+                              auto_adjust = True, #Automatically adjuss the closing prices for each period. 
+                              treads = True) #Whether to use threads for mass downloading. 
+  
+def compare_two_stocks(stock1,stock2):
+  stock1 = stock1.upper()
+  stock2 = stock2.upper()
+  two_stock_data = yf.download (tickers = stock1 +" " +stock2,
+                              period = "5y", #The starting date of our data set
+                              interval = "1mo",  
+                              group_by = 'ticker', 
+                              auto_adjust = True, #Automatically adjuss the closing prices for each period. 
+                              treads = True) #Whether to use threads for mass downloading. 
+  df_comp = two_stock_data
+  df = pd.DataFrame()
+  df[stock1] = df_comp[stock1].Close
+  df[stock2] = df_comp[stock2].Close
+  df[stock1 + ' return'] = df[stock1].pct_change(1)
+  df[stock2 + ' return'] = df[stock2].pct_change(1)
+  df[stock1 +' cumulative return'] = np.exp(np.log1p(df[stock1 +' return']).cumsum())
+  df[stock2 +' cumulative return'] = np.exp(np.log1p(df[stock2 +' return']).cumsum())
+  return df
 
-st.image("pages/pexels-pixabay-210607.jpg")
+def plot_monthly(df):
+  df = df.iloc[: , 2:4]
+  st.line_chart(df)
+  
+def plot_cum_return(df):
+  df = df.iloc[: , 4:6]
+  st.line_chart(df)
+
+st.write("Please enter the first Ticker of the company you would like to compare visually")
+
+ticker1 = st.text_input("Ticker for company an example is the apple ticker","aapl",key =1)
+
+st.write("Please enter the second Ticker of the company you would like to compare visually")
+
+ticker2 = st.text_input("Ticker for company an example is the amazon ticker","amzn",key =2)
+
+df = compare_two_stocks(ticker1,ticker2)
+
+option = st.radio("Choose a Visual",('Visualize Monthly Return of last five years','Visualize Cumulative Return of last five years'))
+
+if option == 'Visualize Monthly Return of last five years':
+  plot_monthly(df)
+if option == 'Visualize Cumulative Return of last five years':
+  plot_cum_return(df)
