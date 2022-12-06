@@ -1,5 +1,6 @@
 import streamlit as st
 import streamlit.components.v1 as components
+from streamlit_extras.switch_page_button import switch_page
 import pandas as pd 
 
 
@@ -49,7 +50,9 @@ st.header("Welcome To The Future Of Investing")
 col1, col2 = st.columns([1,1])
 
 with col1:
-    st.write("<a href= '/calculate_returns' > Predict The Company's Value", unsafe_allow_html=True)
+    predict_stock = st.button("Predict A Company's Value")
+    if predict_stock:
+        switch_page("/calculate_returns")
 
 
 with col2:
