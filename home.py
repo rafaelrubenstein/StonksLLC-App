@@ -52,7 +52,7 @@ col1, col2 = st.columns([1,1])
 with col1:
     predict_stock = st.button("Predict A Company's Value")
     if predict_stock:
-        switch_page("/calculate_returns")
+        switch_page("calculate_returns")
 
 
 with col2:
