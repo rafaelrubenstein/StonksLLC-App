@@ -4,8 +4,8 @@
 A web application that uses stock fundamental data to classify stocks as undervalued/overvalued
 
 ## Link To App
-
-[Link to web app](https://stonksllc.streamlit.app/)
+    <a href="placeholder.com" target="_blank">Opens in new tab</a>
+[Link to web app](<a> href"https://stonksllc.streamlit.app/" target="_blank"></a>)
 
 ## Features
 - machine learning model to predict if a stock is undervalued or overvalued
