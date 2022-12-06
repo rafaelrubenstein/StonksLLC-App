@@ -25,10 +25,10 @@ st.markdown("""
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link disabled" href="/" target= "_self">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link disabled" href="https://stonksllc.streamlit.app" target= "_self">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/calculate_returns" target= "_self" >Predict Company's Value</a>
+        <a class="nav-link" href="/calculate_returns" >Predict Company's Value</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/visualize_data" target= "_self">Visualize Stock Data</a>
