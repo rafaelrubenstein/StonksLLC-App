@@ -48,7 +48,8 @@ st.markdown("""
 st.header("Welcome To The Future Of Investing")
 
 st.write("Click a Button Below To Get Started")
-col1, col2, col3, col4 = st.columns([1,1,1,1])
+col1, col2 = st.columns([1,1])
+col3, col4 = st.columns([1,1])
 
 with col1:
     predict_stock = st.button("Predict A Company's Value")
