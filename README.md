@@ -17,7 +17,7 @@ A web application that uses stock fundamental data to classify stocks as underva
 - A report of our findings 
 
 ## Data Sources
-- Wharton Research Data Service - https://wrds-www.wharton.upenn.edu/
+[Wharton Research Data Service] (https://wrds-www.wharton.upenn.edu/)
 
 ## About the Process
 
