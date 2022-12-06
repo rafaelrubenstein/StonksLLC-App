@@ -4,7 +4,7 @@
 A web application that uses stock fundamental data to classify stocks as undervalued/overvalued
 
 ## Link To App
-<a href="https://stonksllc.streamlit.app/" target = "_blank"> Link To the Web App</a>
+[Link To the Web App](https://stonksllc.streamlit.app/) 
 
 
 ## Features
