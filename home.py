@@ -47,7 +47,8 @@ st.markdown("""
 # Create a page header
 st.header("Welcome To The Future Of Investing")
 
-col1, col2, col3 = st.columns([1,1,1])
+st.write("Click a Button Below To Get Started")
+col1, col2, col3, col4 = st.columns([1,1,1,1])
 
 with col1:
     predict_stock = st.button("Predict A Company's Value")
@@ -60,6 +61,14 @@ with col2:
         switch_page("visualize_data")
         
 with col3:
+    aboutus = st.button("Find Out More About Us!")
+    if aboutus:
+        switch_page("about_us")
+        
+with col4:
+    contact = st.button("Contact Us")
+    if contact:
+        switch_page("contact")
 
-    st.image("StockData.png")
+st.image("StockData.png",caption ="What Stock Data Looks Like")        
 
