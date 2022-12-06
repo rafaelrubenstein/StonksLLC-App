@@ -8,3 +8,4 @@ pycaret
 bs4
 requests
 yfinance
+streamlit-extras
