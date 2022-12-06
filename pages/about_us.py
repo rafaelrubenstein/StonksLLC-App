@@ -4,7 +4,7 @@ st.set_page_config(
     page_title="About us",
     page_icon="💸",
     initial_sidebar_state="collapsed",
-    layout = "centered",
+    layout = "wide",
 )
 
 with open("styles.css") as f:
