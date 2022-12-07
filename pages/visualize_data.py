@@ -102,7 +102,7 @@ def plot_cum_yearly_return(df,stock1,stock2):
   title= "Cumulative Yearly Return",
   xaxis_title="Date",
   yaxis_title="Percent Change",
-  legend_title="Stock Ticker")
+  legend_title="Stock Ticker",barmode='group')
   st.plotly_chart(fig,use_container_width=True)
 
 def plot_yearly_return(df,stock1,stock2):
@@ -119,7 +119,7 @@ def plot_yearly_return(df,stock1,stock2):
   title= "Yearly Return",
   xaxis_title="Date",
   yaxis_title="Percent Change",
-  legend_title="Stock Ticker")
+  legend_title="Stock Ticker",barmode='group')
   st.plotly_chart(fig,use_container_width=True)
 
 st.write("I would like to compare the returns of")
