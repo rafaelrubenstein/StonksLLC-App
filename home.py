@@ -58,14 +58,14 @@ with col1:
         switch_page("calculate_returns")
 
 with col2:
-    visualize = st.button("Visualize Stock Data")
-    if visualize:
-        switch_page("visualize_data")
-        
-with col3:
     aboutus = st.button("Find Out More About Us!")
     if aboutus:
         switch_page("about_us")
+        
+with col3:
+    visualize = st.button("Visualize Stock Data")
+    if visualize:
+        switch_page("visualize_data")
         
 with col4:
     contact = st.button("Contact Us")
