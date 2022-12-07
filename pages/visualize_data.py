@@ -86,17 +86,17 @@ def plot_cum_return(df):
   df = df.iloc[: , 4:6]
   st.line_chart(df)
 
-st.write("Please enter the first Ticker of the company you would like to compare visually")
+st.write("I would like to compare the cumulative returns of")
 
-ticker1 = st.text_input("Ticker for company an example is the apple ticker","aapl",key =1)
+ticker1 = st.text_input("ex. 'aapl' or 'amzn","aapl",key =1)
 
-st.write("Please enter the second Ticker of the company you would like to compare visually")
+st.write("with")
 
-ticker2 = st.text_input("Ticker for company an example is the amazon ticker","amzn",key =2)
+ticker2 = st.text_input("","amzn",key =2)
 
 df = compare_two_stocks(ticker1,ticker2)
 
-option = st.radio("Choose a Visual",('Visualize Monthly Return of last five years','Visualize Cumulative Return of last five years'))
+option = st.radio("",('Visualize Monthly Return of last five years','Visualize Cumulative Return of last five years'))
 
 if option == 'Visualize Monthly Return of last five years':
   plot_monthly(df)
