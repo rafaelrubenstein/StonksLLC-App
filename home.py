@@ -34,7 +34,7 @@ st.markdown("""
         <a class="nav-link" href="/visualize_data" target= "_self">Visualize Stock Data</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href=/about_us" target= "_self"> About Us</a>
+        <a class="nav-link" href="/about_us" target= "_self"> About Us</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/contact" target= "_self">Contact us</a>
