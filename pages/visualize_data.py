@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import yfinance as yf
 import pandas as pd 
 import numpy as np
+import plotly.express as px
 
 
 
@@ -47,18 +48,7 @@ st.markdown("""
 </nav>
 """, unsafe_allow_html=True)
 
-def get_index_prices(index1,index2,index3,index4,index5):
-  #  this may not be needed but would be used to set the end date
-  # date = (datetime.datetime.today()- timedelta(days = 1)).date().isoformat()
-  date_5_years_ago = (datetime.datetime.today()- timedelta(days = 1825)).date().isoformat()
-  indexfunds = index1 + " " + index2 + " " + index3 + " " + index4 + " " + index5
-  raw_data = yf.download (tickers = indexfunds,
-                              start = date_5_years_ago, #The starting date of our data set
-                              interval = "1mo",  
-                              group_by = 'ticker', 
-                              auto_adjust = True, #Automatically adjuss the closing prices for each period. 
-                              treads = True) #Whether to use threads for mass downloading. 
-  
+
 def compare_two_stocks(stock1,stock2):
   stock1 = stock1.upper()
   stock2 = stock2.upper()
@@ -72,21 +62,67 @@ def compare_two_stocks(stock1,stock2):
   df = pd.DataFrame()
   df[stock1] = df_comp[stock1].Close
   df[stock2] = df_comp[stock2].Close
-  df[stock1 + ' return'] = df[stock1].pct_change(1)
-  df[stock2 + ' return'] = df[stock2].pct_change(1)
-  df[stock1 +' cumulative return'] = np.exp(np.log1p(df[stock1 +' return']).cumsum())
-  df[stock2 +' cumulative return'] = np.exp(np.log1p(df[stock2 +' return']).cumsum())
+  df[stock1 + ' Monthly Return'] = df[stock1].pct_change(1)
+  df[stock2 + ' Monthly Return'] = df[stock2].pct_change(1)
+  df[stock1 +' Monthly Cumulative Return'] = np.exp((np.log1p(df[stock1 +' Monthly Return']).cumsum()))
+  df[stock2 +' Monthly Cumulative Return'] = np.exp((np.log1p(df[stock2 +' Monthly Return']).cumsum()))
   return df
 
 def plot_monthly(df):
-  df = df.iloc[: , 2:4]
-  st.line_chart(df)
+  df = df.iloc[1: , 2:4].apply(lambda x: x * 100)
+  fig = px.line(df)
+  fig.update_layout(
+  title= "Monthly Return",
+  xaxis_title="Date",
+  yaxis_title="Percent Change",
+  legend_title="Stock Ticker")
+  st.plotly_chart(fig,use_container_width=True)
   
-def plot_cum_return(df):
-  df = df.iloc[: , 4:6]
-  st.line_chart(df)
+def plot_cum_monthly_return(df):
+  df = df.iloc[1: , 4:6].apply(lambda x: x * 100)
+  fig = px.line(df)
+  fig.update_layout(
+  title= "Cumulative Monthly Return",
+  xaxis_title="Date",
+  yaxis_title="Percent Change",
+  legend_title="Stock Ticker")
+  st.plotly_chart(fig,use_container_width=True)
 
-st.write("I would like to compare the cumulative returns of")
+def plot_cum_yearly_return(df,stock1,stock2):
+  stock1 = stock1.upper()
+  stock2 = stock2.upper()
+  df = df.iloc[1::12, :2]
+  df[stock1 + ' Yearly Return'] = df[stock1].pct_change(1)
+  df[stock2 + ' Yearly Return'] = df[stock2].pct_change(1)
+  df[stock1 +' Yearly Cumulative Return'] = np.exp((np.log1p(df[stock1 +' Yearly Return']).cumsum()))
+  df[stock2 +' Yearly Cumulative Return'] = np.exp((np.log1p(df[stock2 +' Yearly Return']).cumsum()))
+  df = df.iloc[1: , 4:6].apply(lambda x: x * 100)
+  fig = px.bar(df)
+  fig.update_layout(
+  title= "Cumulative Yearly Return",
+  xaxis_title="Date",
+  yaxis_title="Percent Change",
+  legend_title="Stock Ticker")
+  st.plotly_chart(fig,use_container_width=True)
+
+def plot_yearly_return(df,stock1,stock2):
+  stock1 = stock1.upper()
+  stock2 = stock2.upper()
+  df = df.iloc[1::12, :2]
+  df[stock1 + ' Yearly Return'] = df[stock1].pct_change(1)
+  df[stock2 + ' Yearly Return'] = df[stock2].pct_change(1)
+  df[stock1 +' Yearly Cumulative Return'] = np.exp((np.log1p(df[stock1 +' Yearly Return']).cumsum()))
+  df[stock2 +' Yearly Cumulative Return'] = np.exp((np.log1p(df[stock2 +' Yearly Return']).cumsum()))
+  df = df.iloc[1: , 2:4].apply(lambda x: x * 100)
+  fig = px.bar(df)
+  fig.update_layout(
+  title= "Yearly Return",
+  xaxis_title="Date",
+  yaxis_title="Percent Change",
+  legend_title="Stock Ticker")
+  st.plotly_chart(fig,use_container_width=True)
+
+st.write("I would like to compare the returns of")
 
 ticker1 = st.text_input("ex. 'aapl' or 'amzn","aapl",key =1)
 
@@ -96,9 +132,13 @@ ticker2 = st.text_input("","amzn",key =2)
 
 df = compare_two_stocks(ticker1,ticker2)
 
-option = st.radio("",('Visualize Monthly Return of last five years','Visualize Cumulative Return of last five years'))
+option = st.radio("",('Visualize Monthly Return Of Last Five Years','Visualize Cumulative Return Of Last Five Years','Visualize Yearly Return Of Last Five Years','Visualize Cumulative Yearly Return Of Last Five Years'))
 
-if option == 'Visualize Monthly Return of last five years':
+if option == 'Visualize Monthly Return Of Last Five Years':
   plot_monthly(df)
-if option == 'Visualize Cumulative Return of last five years':
-  plot_cum_return(df)
+if option == 'Visualize Cumulative Return Of Last Five Years':
+  plot_cum_monthly_return(df)
+if option == 'Visualize Yearly Return Of Last Five Years':
+  plot_yearly_return(df,ticker1,ticker2)
+if option == 'Visualize Cumulative Yearly Return Of Last Five Years':
+  plot_cum_yearly_return(df,ticker1,ticker2)
