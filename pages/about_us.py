@@ -54,7 +54,7 @@ with col1:
 with col2:
   st.title("Yaakov Goffstein")
   st.image("pages/yaakov.jpeg")
-  st.write("""FILL IN INFO """)
+  st.write("""Yaakov is studying Computational Mathematics and Computer Science at Brooklyn College. He has an interest in all things data science.  """)
 
 with col3:
   st.title("Nguyen Than")
