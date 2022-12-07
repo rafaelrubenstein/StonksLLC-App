@@ -58,5 +58,5 @@ with col2:
 
 with col3:
   st.title("Nguyen Than")
-  st.image("pages/stockprices.jpg")
+  st.image("pages/nguyen.jpeg")
   st.write("""FILL IN INFO """)
