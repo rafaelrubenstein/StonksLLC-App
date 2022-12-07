@@ -52,6 +52,7 @@ col1, col2 = st.columns([1,1])
 col3, col4 = st.columns([1,1])
 
 with col1:
+    st.caption('Check out our AI prediction!!')
     predict_stock = st.button("Predict A Company's Value")
     if predict_stock:
         switch_page("calculate_returns")
