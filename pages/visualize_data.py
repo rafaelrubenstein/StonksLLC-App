@@ -101,7 +101,7 @@ def plot_cum_yearly_return(df,stock1,stock2):
   fig.update_layout(
   title= "Cumulative Yearly Return",
   xaxis_title="Date",
-  yaxis_title="Percent Change",
+  yaxis_title="Cumulative Return of Initial Investment",
   legend_title="Stock Ticker",barmode='group')
   st.plotly_chart(fig,use_container_width=True)
 
@@ -124,7 +124,7 @@ def plot_yearly_return(df,stock1,stock2):
 
 st.write("I would like to compare the returns of")
 
-ticker1 = st.text_input("ex. 'aapl' or 'amzn","aapl",key =1)
+ticker1 = st.text_input("ex. 'aapl' or 'amzn'","aapl",key =1)
 
 st.write("with")
 
@@ -132,13 +132,11 @@ ticker2 = st.text_input("","amzn",key =2)
 
 df = compare_two_stocks(ticker1,ticker2)
 
-option = st.radio("",('Visualize Monthly Return Of Last Five Years','Visualize Cumulative Return Of Last Five Years','Visualize Yearly Return Of Last Five Years','Visualize Cumulative Yearly Return Of Last Five Years'))
+option = st.radio("",('Continuous Cumulative Return Of Last Five Years','Percent Increase For Each Of Last Four Years','Cumulative Return Over Last Four Years'))
 
-if option == 'Visualize Monthly Return Of Last Five Years':
-  plot_monthly(df)
-if option == 'Visualize Cumulative Return Of Last Five Years':
+if option == 'Continuous Cumulative Return Of Last Five Years':
   plot_cum_monthly_return(df)
-if option == 'Visualize Yearly Return Of Last Five Years':
+if option == 'Percent Increase For Each Of Last Four Years':
   plot_yearly_return(df,ticker1,ticker2)
-if option == 'Visualize Cumulative Yearly Return Of Last Five Years':
+if option == 'Cumulative Return Over Last Four Years':
   plot_cum_yearly_return(df,ticker1,ticker2)
