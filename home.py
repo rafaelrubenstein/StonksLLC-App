@@ -47,25 +47,30 @@ st.markdown("""
 # Create a page header
 st.header("Welcome To The Future Of Investing")
 
+st.write("""Our Main Goal is to give everyone the power of investing. Our website allows you to predict a companys value using AI and Visually compare stock data.
+We are actively working on adding new features to our website. If you would like to request a feature or report a bug you can use the contact form! We hope you enjoy 
+our website!
+""")
+
 st.write("Click a Button Below To Get Started")
 col1, col2 = st.columns([1,1])
 col3, col4 = st.columns([1,1])
 
 with col1:
-    st.caption('Check out our AI prediction!!')
     predict_stock = st.button("Predict A Company's Value")
     if predict_stock:
         switch_page("calculate_returns")
-
+        
 with col2:
+    visualize = st.button("Visualize Stock Data")
+    if visualize:
+        switch_page("visualize_data")
+        
+with col3:
     aboutus = st.button("Find Out More About Us!")
     if aboutus:
         switch_page("about_us")
         
-with col3:
-    visualize = st.button("Visualize Stock Data")
-    if visualize:
-        switch_page("visualize_data")
         
 with col4:
     contact = st.button("Contact Us")
