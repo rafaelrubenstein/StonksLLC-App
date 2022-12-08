@@ -59,4 +59,5 @@ with col2:
 with col3:
   st.title("Nguyen Than")
   st.image("pages/nguyen.jpeg")
-  st.write("""FILL IN INFO """)
+  st.write("""Nguyen Than is currently a student at Baruch College pursuing a bachelor degree in Data Analytics and a minor in Mathematics. 
+Outside of data crunching, she like to garden and make sourdough bread.""")
