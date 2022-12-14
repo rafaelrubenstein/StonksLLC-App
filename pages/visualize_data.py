@@ -84,7 +84,7 @@ def plot_cum_monthly_return(df):
   fig.update_layout(
   title= "Cumulative Monthly Return",
   xaxis_title="Date",
-  yaxis_title="Percent Change",
+  yaxis_title="Monthly Cumulative Return of Initial Investment",
   legend_title="Stock Ticker")
   st.plotly_chart(fig,use_container_width=True)
 
