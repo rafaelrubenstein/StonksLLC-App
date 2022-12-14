@@ -132,11 +132,11 @@ ticker2 = st.text_input("","amzn",key =2)
 
 df = compare_two_stocks(ticker1,ticker2)
 
-option = st.radio("",('Monthly Cumulative Return Of Last Five Years','Percent Increase For Each Of Last Five Years','Cumulative Return Over Last Five Years'))
+option = st.radio("",('Monthly Cumulative Return Of Last Five Years','Percent Increase For Each Of Last Four Years','Cumulative Return Over Last Four Years'))
 
 if option == 'Monthly Cumulative Return Of Last Five Years':
   plot_cum_monthly_return(df)
-if option == 'Percent Increase For Each Of Last Five Years':
+if option == 'Percent Increase For Each Of Last Four Years':
   plot_yearly_return(df,ticker1,ticker2)
-if option == 'Cumulative Return Over Last Five Years':
+if option == 'Cumulative Return Over Last Four Years':
   plot_cum_yearly_return(df,ticker1,ticker2)
