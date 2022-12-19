@@ -120,7 +120,8 @@ def clean_balance_sheet_for_feautures(msft, marketvalue):
         if key not in current_numbers_needed:
             current_numbers_needed[key] = 0
     return current_numbers_needed
-
+st.warning("We are aware of a bug right now that is affecting the financial data. We are working on getting that fixed")
+st.info("Please keep In mind we are currently scraping the data so some tickers may not be available. We are working on getting a better API")
 st.write("Please enter the Ticker of the company you would like to predict its value")
 
 ticker = st.text_input("Ticker for company an example is the apple ticker","aapl")
