@@ -56,7 +56,8 @@ def compare_two_stocks(stock1,stock2):
                               period = "5y", #The starting date of our data set
                               interval = "1mo",  
                               group_by = 'ticker', 
-                              auto_adjust = True, #Automatically adjuss the closing prices for each period.)
+                              auto_adjust = True, #Automatically adjuss the closing prices for each period.
+                               )
   df_comp = two_stock_data
   df = pd.DataFrame()
   df[stock1] = df_comp[stock1].Close
